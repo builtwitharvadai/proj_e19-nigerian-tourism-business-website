@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Discover Nigeria's breathtaking landscapes, rich culture, and unforgettable tourism experiences. Plan your Nigerian adventure today.">
+  
+  <title>{% block title %}Nigerian Tourism - Explore the Beauty of Nigeria{% endblock %}</title>
+  
+  <meta property="og:title" content="{% block og_title %}Nigerian Tourism - Explore the Beauty of Nigeria{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Discover Nigeria's breathtaking landscapes, rich culture, and unforgettable tourism experiences.{% endblock %}">
+  <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='images/og-image.jpg') }}{% endblock %}">
+  <meta property="og:url" content="{{ request.url }}">
+  <meta property="og:type" content="website">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}Nigerian Tourism - Explore the Beauty of Nigeria{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}Discover Nigeria's breathtaking landscapes, rich culture, and unforgettable tourism experiences.{% endblock %}">
+  <meta name="twitter:image" content="{% block twitter_image %}{{ url_for('static', filename='images/og-image.jpg') }}{% endblock %}">
+  
+  <link rel="canonical" href="{{ request.url }}">
+  
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  
+  <meta name="theme-color" content="#10b981" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#059669" media="(prefers-color-scheme: dark)">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+  
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+  
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="font-sans antialiased bg-white text-gray-900">
+  <a href="#main" class="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-emerald-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">
+    Skip to main content
+  </a>
+
+  <header role="banner" class="nav-container">
+    <div class="nav-wrapper">
+      <div class="nav-content">
+        <div class="nav-logo">
+          <a href="{{ url_for('main.index') }}" aria-label="Nigerian Tourism Home">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
+            </svg>
+            <span class="text-xl md:text-2xl font-bold">Nigerian Tourism</span>
+          </a>
+        </div>
+
+        <nav role="navigation" aria-label="Main navigation" class="nav-menu">
+          <a href="{{ url_for('main.index') }}" class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}">
+            Home
+          </a>
+          <a href="{{ url_for('main.destinations') }}" class="nav-link {% if request.endpoint == 'main.destinations' %}active{% endif %}">
+            Destinations
+          </a>
+          <a href="{{ url_for('main.services') }}" class="nav-link {% if request.endpoint == 'main.services' %}active{% endif %}">
+            Services
+          </a>
+          <a href="{{ url_for('main.about') }}" class="nav-link {% if request.endpoint == 'main.about' %}active{% endif %}">
+            About
+          </a>
+          <a href="{{ url_for('main.contact') }}" class="nav-link {% if request.endpoint == 'main.contact' %}active{% endif %}">
+            Contact
+          </a>
+        </nav>
+
+        <button 
+          type="button"
+          class="nav-mobile-toggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          id="mobile-menu-toggle"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav 
+        role="navigation" 
+        aria-label="Mobile navigation"
+        class="nav-mobile-menu"
+        id="mobile-menu"
+        aria-hidden="true"
+      >
+        <a href="{{ url_for('main.index') }}" class="nav-mobile-link {% if request.endpoint == 'main.index' %}bg-emerald-50 text-emerald-600{% endif %}">
+          Home
+        </a>
+        <a href="{{ url_for('main.destinations') }}" class="nav-mobile-link {% if request.endpoint == 'main.destinations' %}bg-emerald-50 text-emerald-600{% endif %}">
+          Destinations
+        </a>
+        <a href="{{ url_for('main.services') }}" class="nav-mobile-link {% if request.endpoint == 'main.services' %}bg-emerald-50 text-emerald-600{% endif %}">
+          Services
+        </a>
+        <a href="{{ url_for('main.about') }}" class="nav-mobile-link {% if request.endpoint == 'main.about' %}bg-emerald-50 text-emerald-600{% endif %}">
+          About
+        </a>
+        <a href="{{ url_for('main.contact') }}" class="nav-mobile-link {% if request.endpoint == 'main.contact' %}bg-emerald-50 text-emerald-600{% endif %}">
+          Contact
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" role="main" class="pt-16 md:pt-20">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div role="status" aria-live="polite" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          {% for category, message in messages %}
+            <div class="rounded-lg p-4 mb-4 {% if category == 'error' %}bg-red-50 text-red-800 border border-red-200{% elif category == 'success' %}bg-green-50 text-green-800 border border-green-200{% else %}bg-blue-50 text-blue-800 border border-blue-200{% endif %}" role="alert">
+              <p class="font-medium">{{ message }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer role="contentinfo" class="footer">
+    <div class="section-container">
+      <div class="footer-content">
+        <div>
+          <h3 class="footer-section-title">Nigerian Tourism</h3>
+          <p class="text-gray-400 mb-4">
+            Discover the beauty, culture, and adventure that Nigeria has to offer. Your journey starts here.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors" aria-label="Facebook">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors" aria-label="Twitter">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-emerald-400 transition-colors" aria-label="Instagram">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="footer-section-title">Quick Links</h3>
+          <nav aria-label="Footer navigation">
+            <a href="{{ url_for('main.index') }}" class="footer-link">Home</a>
+            <a href="{{ url_for('main.destinations') }}" class="footer-link">Destinations</a>
+            <a href="{{ url_for('main.services') }}" class="footer-link">Services</a>
+            <a href="{{ url_for('main.about') }}" class="footer-link">About Us</a>
+          </nav>
+        </div>
+
+        <div>
+          <h3 class="footer-section-title">Services</h3>
+          <nav aria-label="Services navigation">
+            <a href="#" class="footer-link">Tour Packages</a>
+            <a href="#" class="footer-link">Hotel Booking</a>
+            <a href="#" class="footer-link">Travel Guide</a>
+            <a href="#" class="footer-link">Transportation</a>
+          </nav>
+        </div>
+
+        <div>
+          <h3 class="footer-section-title">Contact</h3>
+          <address class="not-italic text-gray-400">
+            <p class="mb-2">Lagos, Nigeria</p>
+            <p class="mb-2">
+              <a href="tel:+2341234567890" class="hover:text-emerald-400 transition-colors">
+                +234 123 456 7890
+              </a>
+            </p>
+            <p>
+              <a href="mailto:info@nigeriantourism.com" class="hover:text-emerald-400 transition-colors">
+                info@nigeriantourism.com
+              </a>
+            </p>
+          </address>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; {{ current_year or 2024 }} Nigerian Tourism. All rights reserved.</p>
+        <div class="mt-2 space-x-4">
+          <a href="#" class="hover:text-emerald-400 transition-colors">Privacy Policy</a>
+          <span aria-hidden="true">|</span>
+          <a href="#" class="hover:text-emerald-400 transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/carousel.js') }}" defer></script>
+  
+  <script>
+    (function() {
+      'use strict';
+      
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (mobileMenuToggle && mobileMenu) {
+        mobileMenuToggle.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          this.setAttribute('aria-expanded', !isExpanded);
+          mobileMenu.setAttribute('aria-hidden', isExpanded);
+          mobileMenu.classList.toggle('open');
+        });
+        
+        mobileMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            mobileMenu.classList.remove('open');
+          });
+        });
+      }
+      
+      let lastScrollTop = 0;
+      const navContainer = document.querySelector('.nav-container');
+      
+      window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollTop > 100) {
+          navContainer.classList.add('scrolled');
+        } else {
+          navContainer.classList.remove('scrolled');
+        }
+        
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+      }, { passive: true });
+    })();
+  </script>
+  
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
